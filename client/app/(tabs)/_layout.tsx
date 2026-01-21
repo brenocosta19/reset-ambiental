@@ -1,35 +1,84 @@
 import { Tabs } from 'expo-router';
-import React from 'react';
-
-import { HapticTab } from '@/components/haptic-tab';
-import { IconSymbol } from '@/components/ui/icon-symbol';
-import { Colors } from '@/constants/theme';
-import { useColorScheme } from '@/hooks/use-color-scheme';
+import Ionicons from '@expo/vector-icons/Ionicons';
+import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
+import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
+import FontAwesome from '@expo/vector-icons/FontAwesome';
+//import { FONTS } from '@/assets/fonts/fonts';
 
 export default function TabLayout() {
-  const colorScheme = useColorScheme();
-
   return (
-    <Tabs
-      screenOptions={{
-        tabBarActiveTintColor: Colors[colorScheme ?? 'light'].tint,
-        headerShown: false,
-        tabBarButton: HapticTab,
+      <Tabs screenOptions={{ 
+        headerShown: false, 
+        tabBarActiveTintColor: '#fffff',
+        tabBarStyle: {
+            height: 85,
+            backgroundColor: '#ffffff',
+            borderRadius: 30,
+            position: 'absolute',
+          },
+        tabBarLabelStyle: {
+          fontSize: 12,
+          //fontFamily: FONTS.regular,
+          paddingTop: 3,
+        },
+        tabBarIconStyle: {
+          marginTop: 4,
+          marginBottom: 0,
+        },
       }}>
-      <Tabs.Screen
-        name="index"
-        options={{
-          title: 'Home',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="house.fill" color={color} />,
-        }}
-      />
-      <Tabs.Screen
-        name="explore"
-        options={{
-          title: 'Explore',
-          tabBarIcon: ({ color }) => <IconSymbol size={28} name="paperplane.fill" color={color} />,
-        }}
-      />
-    </Tabs>
+        <Tabs.Screen 
+          name="home"
+          
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <Ionicons name={focused ? 'home-sharp' : 'home-outline'} color={color} size={focused ? 28 : 24} />
+            ),
+            title: "Home"
+          }}
+        />
+        <Tabs.Screen 
+          name="order" 
+          options={{
+            tabBarIcon: ({ color, focused }) => (
+              <MaterialCommunityIcons name={focused ? 'clipboard-text-multiple' : 'clipboard-text-multiple-outline'} size={focused ? 28 : 24} color={color} />
+            ),
+            title: "Pedidos"
+          }}
+        />
+        <Tabs.Screen
+          name="createOrder"
+          options={{
+            tabBarLabel: () => null,
+            tabBarIcon: ({ color, focused }) => (
+              <FontAwesome
+                name={focused ? 'plus-square' : 'plus-square-o'}
+                size={focused ? 29 : 33} 
+                color={color}
+              />
+            ),
+            tabBarIconStyle: { marginTop: 10 },
+          }}
+        />
+        <Tabs.Screen
+          name="financial"
+          options={{
+            tabBarIcon: ({color, focused}) => (
+              <FontAwesome6 name={focused ? 'money-bill-1-wave' : 'money-bill-1'} size={focused ? 28 : 24} color={color} />
+            ),
+            title: "Finanças"
+          }}
+        />
+        <Tabs.Screen 
+          name="tasks"
+          options={{
+            tabBarIcon: ({color, focused}) => (
+              <MaterialCommunityIcons name={focused ? 'list-box' : 'list-box-outline'} size={focused ? 28 : 24} color={color} />
+            ),
+            title: "Tarefas"
+          }}
+        />
+      </Tabs>
   );
 }
+
+
