@@ -1,6 +1,6 @@
 import { View, Text, Image, Pressable, StyleSheet } from 'react-native';
 import Ionicons from '@expo/vector-icons/Ionicons';
-import { FONTS } from '@/assets/fonts/fonts';
+//import { FONTS } from '@/assets/fonts/fonts';
 
 export default function Index() {
   return (
@@ -51,7 +51,7 @@ const styles = StyleSheet.create({
   },
   greetingText: {
     fontSize: 17,
-    fontFamily: FONTS.bold,
+    //fontFamily: FONTS.bold,
     color: "#333", // Adicionado para melhor contraste
   },
   notificationIcon: {
@@ -70,13 +70,13 @@ const styles = StyleSheet.create({
     marginBottom: 20,
   },
   title: {
-    fontFamily: FONTS.bold,
+    //fontFamily: FONTS.bold,
     fontSize: 24,
     color: "#333",
     textAlign: "center",
   },
   description: {
-    fontFamily: FONTS.regular,
+    //fontFamily: FONTS.regular,
     fontSize: 16,
     color: "#666",
     textAlign: "center",
@@ -102,6 +102,6 @@ const styles = StyleSheet.create({
     color: '#fff',
     marginLeft: 6,
     fontSize: 14,
-    fontFamily: FONTS.bold, // Adicionado negrito para ênfase
+    //fontFamily: FONTS.bold, // Adicionado negrito para ênfase
   },
 });

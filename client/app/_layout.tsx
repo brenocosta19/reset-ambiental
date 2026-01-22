@@ -1,24 +1,31 @@
-import { DarkTheme, DefaultTheme, ThemeProvider } from '@react-navigation/native';
-import { Stack } from 'expo-router';
-import { StatusBar } from 'expo-status-bar';
-import 'react-native-reanimated';
-
-import { useColorScheme } from '@/hooks/use-color-scheme';
-
-export const unstable_settings = {
-  anchor: '(tabs)',
-};
+import { Stack } from 'expo-router'
+import { SafeAreaView } from 'react-native-safe-area-context'
+import { useFonts } from 'expo-font';
 
 export default function RootLayout() {
-  const colorScheme = useColorScheme();
-
+  const [fontsLoaded] = useFonts({
+    'JetBrainsMono-Regular': require('../assets/fonts/JetBrainsMono-Regular.ttf'),
+    'JetBrainsMono-Medium': require('../assets/fonts/JetBrainsMono-Medium.ttf'),
+    'JetBrainsMono-Italic': require('../assets/fonts/JetBrainsMono-Italic.ttf'),
+    'JetBrainsMono-Bold': require('../assets/fonts/JetBrainsMono-Bold.ttf'),
+  });
+  
+  if (!fontsLoaded) {
+      return null; // ou SplashScreen
+    }
+  
   return (
-    <ThemeProvider value={colorScheme === 'dark' ? DarkTheme : DefaultTheme}>
-      <Stack>
-        <Stack.Screen name="(tabs)" options={{ headerShown: false }} />
-        <Stack.Screen name="modal" options={{ presentation: 'modal', title: 'Modal' }} />
+    <SafeAreaView style={{ flex: 1, backgroundColor: "#E6E6E6" }} edges={['top']}>
+      <Stack >
+        <Stack.Screen 
+          name="(tabs)" 
+          options={{ 
+            headerShown: false, 
+            statusBarStyle: 'dark'
+          }} 
+        />
       </Stack>
-      <StatusBar style="auto" />
-    </ThemeProvider>
-  );
+    </SafeAreaView>
+    
+  )
 }

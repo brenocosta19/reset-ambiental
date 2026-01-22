@@ -1,4 +1,4 @@
-import OrderFlow from '@/src/screens/CreateOrder/OrderFlow'
+import OrderFlow from '@/components/steps/OrderFlow'
 
 export default function CreateOrder() {
   return (

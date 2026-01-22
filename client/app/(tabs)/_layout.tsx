@@ -3,7 +3,7 @@ import Ionicons from '@expo/vector-icons/Ionicons';
 import MaterialCommunityIcons from '@expo/vector-icons/MaterialCommunityIcons';
 import FontAwesome6 from '@expo/vector-icons/FontAwesome6';
 import FontAwesome from '@expo/vector-icons/FontAwesome';
-//import { FONTS } from '@/assets/fonts/fonts';
+import { FONTS } from '@/assets/fonts/fonts';
 
 export default function TabLayout() {
   return (
@@ -18,7 +18,7 @@ export default function TabLayout() {
           },
         tabBarLabelStyle: {
           fontSize: 12,
-          //fontFamily: FONTS.regular,
+          fontFamily: FONTS.regular,
           paddingTop: 3,
         },
         tabBarIconStyle: {
@@ -46,7 +46,7 @@ export default function TabLayout() {
           }}
         />
         <Tabs.Screen
-          name="createOrder"
+          name="create-order"
           options={{
             tabBarLabel: () => null,
             tabBarIcon: ({ color, focused }) => (
