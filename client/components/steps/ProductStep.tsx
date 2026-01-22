@@ -113,149 +113,155 @@ export default function ProductStep({ orderData, updateProdutos }: ProductStepPr
   const totalSteps = 3;
 
   return (
-    <View style={styles.container}>
-      {/* Progress Indicator */}
-      <View style={styles.progressContainer}>
-        {Array.from({ length: totalSteps }, (_, index) => (
-          <View
-            key={index}
-            style={[
-              styles.progressStep,
-              index < currentStep ? styles.progressStepActive : styles.progressStepInactive,
-            ]}
-          />
-        ))}
-      </View>
-      <Text style={styles.progressText}>Passo {currentStep} de {totalSteps}</Text>
-
-      {/* Header */}
-      <View style={styles.header}>
-        <Text style={styles.title}>Produtos do Pedido</Text>
-      </View>
-
-      {/* Formulário para adicionar produto */}
-      <View style={styles.card}>
-        <View style={styles.cardHeader}>
-          <Feather name="box" size={20} color="#000" />
-          <Text style={styles.cardTitle}>Adicionar Produto</Text>
-        </View>
-
-        <Text style={styles.label}>Nome do Produto</Text>
-        <TextInput 
-          style={styles.input} 
-          value={productName}
-          onChangeText={setProductName}
-          placeholder="Ex: Produto A"
-          placeholderTextColor="#999"
-        />
-
-        <View style={styles.row}>
-          <View style={[styles.column, { flex: 2, marginRight: 12 }]}>
-            <Text style={styles.label}>Preço Unitário (R$)</Text>
-            <TextInput 
-              style={styles.input} 
-              value={unitPrice}
-              onChangeText={setUnitPrice}
-              keyboardType="numeric" 
-              placeholder="0.00"
-              placeholderTextColor="#999"
+    <ScrollView>
+      <View style={styles.container}>
+        {/* Progress Indicator */}
+        <View style={styles.progressContainer}>
+          {Array.from({ length: totalSteps }, (_, index) => (
+            <View
+              key={index}
+              style={[
+                styles.progressStep,
+                index < currentStep ? styles.progressStepActive : styles.progressStepInactive,
+              ]}
             />
-          </View>
-          
-          <View style={[styles.column, { flex: 1 }]}>
-            <Text style={styles.label}>Quantidade</Text>
-            <TextInput 
-              style={styles.input} 
-              value={qty}
-              onChangeText={setQty}
-              keyboardType="numeric" 
-              placeholder="1"
-              placeholderTextColor="#999"
-            />
-          </View>
-        </View>
-
-        <TouchableOpacity style={styles.addButton} onPress={addProduct}>
-          <Ionicons name="add-circle-outline" size={20} color="#000" style={styles.addIcon} />
-          <Text style={styles.addButtonText}>Adicionar Produto</Text>
-        </TouchableOpacity>
-      </View>
-
-      {/* Lista de produtos */}
-      <View style={styles.sectionHeader}>
-        <Ionicons name="cart-outline" size={22} color="#000" style={styles.sectionIcon} />
-        <Text style={styles.sectionTitle}>
-          Produtos ({orderData.produtos.length} {orderData.produtos.length === 1 ? 'item' : 'itens'})
-        </Text>
-      </View>
-
-      {orderData.produtos.length === 0 ? (
-        <Text style={styles.emptyText}>Nenhum produto adicionado</Text>
-      ) : (
-        <ScrollView 
-          style={styles.productsList}
-          showsVerticalScrollIndicator={false}
-        >
-          {orderData.produtos.map((produto) => (
-            <View key={produto.id} style={styles.productItem}>
-              <View style={styles.productInfo}>
-                <Feather name="package" size={18} color="#000" />
-                <Text style={styles.productName} numberOfLines={1}>
-                  {produto.nome}
-                </Text>
-              </View>
-              
-              <View style={styles.productControls}>
-                <View style={styles.quantityControls}>
-                  <TouchableOpacity onPress={() => decreaseQty(produto.id)}>
-                    <Feather name="minus-square" size={22} color="#000" />
-                  </TouchableOpacity>
-                  
-                  <Text style={styles.quantityText}>{produto.quantidade}</Text>
-                  
-                  <TouchableOpacity onPress={() => increaseQty(produto.id)}>
-                    <Feather name="plus-square" size={22} color="#000" />
-                  </TouchableOpacity>
-                </View>
-                
-                <Text style={styles.productPrice}>
-                  R$ {(produto.quantidade * produto.preco).toFixed(2).replace('.', ',')}
-                </Text>
-                
-                <TouchableOpacity 
-                  style={styles.removeButton}
-                  onPress={() => removeProduct(produto.id)}
-                >
-                  <Ionicons name="trash-outline" size={20} color="#DC2626" />
-                </TouchableOpacity>
-              </View>
-            </View>
           ))}
-        </ScrollView>
-      )}
-
-      {/* Total */}
-      {orderData.produtos.length > 0 && (
-        <View style={styles.totalContainer}>
-          <Text style={styles.totalLabel}>Total do Pedido:</Text>
-          <Text style={styles.totalValue}>
-            R$ {calculateTotal().toFixed(2).replace('.', ',')}
-          </Text>
         </View>
-      )}
-    </View>
+        <Text style={styles.progressText}>Passo {currentStep} de {totalSteps}</Text>
+  
+        {/* Header */}
+        <View style={styles.header}>
+          <Text style={styles.title}>Produtos do Pedido</Text>
+        </View>
+  
+        {/* Formulário para adicionar produto */}
+        <View style={styles.card}>
+          <View style={styles.cardHeader}>
+            <Feather name="box" size={20} color="#000" />
+            <Text style={styles.cardTitle}>Adicionar Produto</Text>
+          </View>
+  
+          <Text style={styles.label}>Nome do Produto</Text>
+          <TextInput 
+            style={styles.input} 
+            value={productName}
+            onChangeText={setProductName}
+            placeholder="Ex: Produto A"
+            placeholderTextColor="#999"
+          />
+  
+          <View style={styles.row}>
+            <View style={[styles.column, { flex: 2, marginRight: 12 }]}>
+              <Text style={styles.label}>Preço Unitário (R$)</Text>
+              <TextInput 
+                style={styles.input} 
+                value={unitPrice}
+                onChangeText={setUnitPrice}
+                keyboardType="numeric" 
+                placeholder="0.00"
+                placeholderTextColor="#999"
+              />
+            </View>
+            
+            <View style={[styles.column, { flex: 1 }]}>
+              <Text style={styles.label}>Quantidade</Text>
+              <TextInput 
+                style={styles.input} 
+                value={qty}
+                onChangeText={setQty}
+                keyboardType="numeric" 
+                placeholder="1"
+                placeholderTextColor="#999"
+              />
+            </View>
+          </View>
+  
+          <TouchableOpacity style={styles.addButton} onPress={addProduct}>
+            <Ionicons name="add-circle-outline" size={20} color="#000" style={styles.addIcon} />
+            <Text style={styles.addButtonText}>Adicionar Produto</Text>
+          </TouchableOpacity>
+        </View>
+  
+        {/* Lista de produtos */}
+        <View style={{ padding: 10}}>
+          <View style={styles.sectionHeader}>
+            <Ionicons name="cart-outline" size={22} color="#000" style={styles.sectionIcon} />
+            <Text style={styles.sectionTitle}>
+              Produtos ({orderData.produtos.length} {orderData.produtos.length === 1 ? 'item' : 'itens'})
+            </Text>
+          </View>
+    
+          {orderData.produtos.length === 0 ? (
+            <Text style={styles.emptyText}>Nenhum produto adicionado</Text>
+          ) : (
+            <ScrollView 
+              style={styles.productsList}
+              showsVerticalScrollIndicator={false}
+            >
+              {orderData.produtos.map((produto) => (
+                <View key={produto.id} style={styles.productItem}>
+                  <View style={styles.productInfo}>
+                    <Feather name="package" size={18} color="#000" />
+                    <Text style={styles.productName} numberOfLines={1}>
+                      {produto.nome}
+                    </Text>
+                  </View>
+                  
+                  <View style={styles.productControls}>
+                    <View style={styles.quantityControls}>
+                      <TouchableOpacity onPress={() => decreaseQty(produto.id)}>
+                        <Feather name="minus-square" size={22} color="#000" />
+                      </TouchableOpacity>
+                      
+                      <Text style={styles.quantityText}>{produto.quantidade}</Text>
+                      
+                      <TouchableOpacity onPress={() => increaseQty(produto.id)}>
+                        <Feather name="plus-square" size={22} color="#000" />
+                      </TouchableOpacity>
+                    </View>
+                    
+                    <Text style={styles.productPrice}>
+                      R$ {(produto.quantidade * produto.preco).toFixed(2).replace('.', ',')}
+                    </Text>
+                    
+                    <TouchableOpacity 
+                      style={styles.removeButton}
+                      onPress={() => removeProduct(produto.id)}
+                    >
+                      <Ionicons name="trash-outline" size={20} color="#DC2626" />
+                    </TouchableOpacity>
+                  </View>
+                </View>
+              ))}
+            </ScrollView>
+          )}
+        </View>
+        
+  
+        {/* Total */}
+        {orderData.produtos.length > 0 && (
+          <View style={styles.totalContainer}>
+            <Text style={styles.totalLabel}>Total do Pedido:</Text>
+            <Text style={styles.totalValue}>
+              R$ {calculateTotal().toFixed(2).replace('.', ',')}
+            </Text>
+          </View>
+        )}
+      </View>
+    </ScrollView>
   );
 }
 
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F5F5F5',
+    backgroundColor: '#E6E6E6',
   },
   progressContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     marginBottom: 8,
+    marginTop: 15
   },
   progressStep: {
     width: 40,
@@ -264,7 +270,7 @@ const styles = StyleSheet.create({
     marginHorizontal: 4,
   },
   progressStepActive: {
-    backgroundColor: '#007AFF',
+    backgroundColor: '#000000',
   },
   progressStepInactive: {
     backgroundColor: '#DDD',
@@ -292,12 +298,13 @@ const styles = StyleSheet.create({
     backgroundColor: '#FFF',
     borderRadius: 12,
     padding: 20,
-    marginBottom: 24,
+    marginBottom: 10,
     shadowColor: '#000',
     shadowOffset: { width: 0, height: 1 },
     shadowOpacity: 0.1,
     shadowRadius: 2,
     elevation: 2,
+    margin: 10
   },
   cardHeader: {
     flexDirection: 'row',
@@ -425,13 +432,14 @@ const styles = StyleSheet.create({
     padding: 4,
   },
   totalContainer: {
-    backgroundColor: '#F0F0F0',
+    backgroundColor: '#E6E6E6',
     borderRadius: 8,
     padding: 20,
     flexDirection: 'row',
     justifyContent: 'space-between',
     alignItems: 'center',
     marginTop: 'auto',
+    marginBottom: 10,
   },
   totalLabel: {
     fontSize: 18,

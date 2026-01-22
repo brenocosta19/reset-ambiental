@@ -5,7 +5,6 @@ import {
   TouchableOpacity,
   StyleSheet,
   SafeAreaView,
-  ScrollView,
   Alert,
   Modal,
 } from 'react-native';
@@ -13,6 +12,7 @@ import ClientStep from "./ClientStep";
 import ProductStep from "./ProductStep";
 import SummaryStep from "./SummaryStep";
 import PdfGenerator from "../PdfGenerator";
+import { FONTS } from '@/assets/fonts/fonts';
 
 // Tipos
 interface OrderData {
@@ -42,7 +42,7 @@ export default function OrderFlow() {
     observacoes: '',
   });
 
-  // Função para atualizar os dados básicos - RENOMEADA para updateCliente
+  // Função para atualizar os dados básicos
   const updateCliente = (orderInfo: Partial<Omit<OrderData, 'produtos'>>) => {
     setOrderData(prev => ({
       ...prev,
@@ -128,7 +128,6 @@ export default function OrderFlow() {
   };
 
   const renderStepContent = () => {
-    // Props que serão passadas para os steps
     switch (step) {
       case 1:
         return <ClientStep 
@@ -197,94 +196,79 @@ export default function OrderFlow() {
 
   return (
     <SafeAreaView style={styles.container}>
-      <ScrollView 
-        contentContainerStyle={styles.scrollContent}
-        showsVerticalScrollIndicator={false}
-      >
-        <Text style={styles.header}>Criar Pedido</Text>
-        
-        {/* Indicador de progresso */}
-        {renderStepIndicator()}
-        
-        <Text style={styles.stepCounter}>
-          Passo {step} de {totalSteps}
-        </Text>
 
-        {/* Conteúdo do step */}
-        <View style={styles.contentContainer}>
-          {renderStepContent()}
-        </View>
+      {/* Conteúdo do step (SEM container extra) */}
+      {renderStepContent()}
 
-        {/* Botões */}
-        <View style={styles.buttonsContainer}>
-          {/* Botão Anterior */}
-          {step > 1 && (
-            <TouchableOpacity
-              style={[styles.button, styles.previousButton]}
-              onPress={handlePrevious}
-            >
-              <Text style={styles.buttonText}>
-                Voltar
-              </Text>
-            </TouchableOpacity>
-          )}
-
-          {/* Botão Principal */}
-          {step < totalSteps ? (
-            <TouchableOpacity
-              style={[styles.button, styles.primaryButton]}
-              onPress={handleNext}
-            >
-              <Text style={styles.buttonText}>
-                Continuar
-              </Text>
-            </TouchableOpacity>
-          ) : (
-            <>
-              <TouchableOpacity
-                style={[styles.button, styles.successButton]}
-                onPress={handleFinishOrder}
-              >
-                <Text style={styles.buttonText}>
-                  Finalizar Pedido
-                </Text>
-              </TouchableOpacity>
-              
-              <TouchableOpacity
-                style={[styles.button, styles.pdfButton]}
-                onPress={handleGeneratePDF}
-              >
-                <Text style={styles.buttonText}>
-                  Gerar PDF
-                </Text>
-              </TouchableOpacity>
-            </>
-          )}
-
-          {/* Botão Cancelar */}
+      {/* Botões */}
+      <View style={styles.buttonsContainer}>
+        {/* Botão Anterior */}
+        {step > 1 && (
           <TouchableOpacity
-            style={[styles.button, styles.cancelButton]}
-            onPress={() => {
-              Alert.alert(
-                'Cancelar Pedido',
-                'Tem certeza que deseja cancelar? Todos os dados serão perdidos.',
-                [
-                  { text: 'Continuar Editando', style: 'cancel' },
-                  { 
-                    text: 'Cancelar Pedido', 
-                    style: 'destructive',
-                    onPress: resetOrder
-                  },
-                ]
-              );
-            }}
+            style={[styles.button, styles.grayButton]}
+            onPress={handlePrevious}
           >
-            <Text style={styles.cancelButtonText}>
-              Cancelar
+            <Text style={styles.buttonText}>
+              Voltar
             </Text>
           </TouchableOpacity>
-        </View>
-      </ScrollView>
+        )}
+
+        {/* Botão Principal */}
+        {step < totalSteps ? (
+          <TouchableOpacity
+            style={[styles.button, styles.grayButton]}
+            onPress={handleNext}
+          >
+            <Text style={styles.buttonText}>
+              Continuar
+            </Text>
+          </TouchableOpacity>
+        ) : (
+          <>
+            <TouchableOpacity
+              style={[styles.button, styles.grayButton]}
+              onPress={handleFinishOrder}
+            >
+              <Text style={styles.buttonText}>
+                Finalizar
+              </Text>
+            </TouchableOpacity>
+            
+            <TouchableOpacity
+              style={[styles.button, styles.grayButton]}
+              onPress={handleGeneratePDF}
+            >
+              <Text style={styles.buttonText}>
+                Gerar PDF
+              </Text>
+            </TouchableOpacity>
+          </>
+        )}
+
+        {/* Botão Cancelar */}
+        <TouchableOpacity
+          style={[styles.button, styles.cancelButton]}
+          onPress={() => {
+            Alert.alert(
+              'Cancelar Pedido',
+              'Tem certeza que deseja cancelar? Todos os dados serão perdidos.',
+              [
+                { text: 'Continuar Editando', style: 'cancel' },
+                { 
+                  text: 'Cancelar Pedido', 
+                  style: 'destructive',
+                  onPress: resetOrder
+                },
+              ]
+            );
+          }}
+        >
+          <Text style={styles.cancelButtonText}>
+            Cancelar
+          </Text>
+        </TouchableOpacity>
+      </View>
 
       {/* Modal para gerar PDF */}
       <Modal
@@ -305,33 +289,35 @@ export default function OrderFlow() {
 const styles = StyleSheet.create({
   container: {
     flex: 1,
-    backgroundColor: '#F2F2F7',
+    backgroundColor: '#E6E6E6',
   },
-  scrollContent: {
-    flexGrow: 1,
-    padding: 20,
+  headerContainer: {
+    paddingHorizontal: 20,
+    paddingTop: 20,
+    paddingBottom: 16,
+    backgroundColor: '#F2F2F7',
   },
   header: {
     fontSize: 28,
     fontWeight: 'bold',
     color: '#1C1C1E',
-    marginBottom: 30,
+    marginBottom: 24,
     textAlign: 'center',
   },
   stepIndicatorContainer: {
     flexDirection: 'row',
     justifyContent: 'center',
     alignItems: 'center',
-    marginBottom: 20,
+    marginBottom: 16,
   },
   stepIndicatorRow: {
     flexDirection: 'row',
     alignItems: 'center',
   },
   stepIndicator: {
-    width: 40,
-    height: 40,
-    borderRadius: 20,
+    width: 36,
+    height: 36,
+    borderRadius: 18,
     justifyContent: 'center',
     alignItems: 'center',
   },
@@ -342,75 +328,59 @@ const styles = StyleSheet.create({
   stepLine: {
     width: 40,
     height: 2,
-    marginHorizontal: 5,
+    marginHorizontal: 4,
   },
   stepCounter: {
-    fontSize: 16,
+    fontSize: 14,
     color: '#8E8E93',
     textAlign: 'center',
-    marginBottom: 30,
-  },
-  contentContainer: {
-    backgroundColor: 'white',
-    borderRadius: 12,
-    padding: 20,
-    marginBottom: 30,
-    shadowColor: '#000',
-    shadowOffset: { width: 0, height: 2 },
-    shadowOpacity: 0.1,
-    shadowRadius: 4,
-    elevation: 3,
+    marginTop: 8,
   },
   stepContent: {
+    flex: 1,
     alignItems: 'center',
+    justifyContent: 'center',
   },
   buttonsContainer: {
     flexDirection: 'row',
     flexWrap: 'wrap',
     justifyContent: 'space-between',
     gap: 10,
-    marginTop: 'auto',
-    marginBottom: 20,
+    paddingHorizontal: 20,
+    paddingVertical: 16,
+    backgroundColor: '#E6E6E6',
+    borderTopWidth: 1,
+    borderTopColor: '#E5E5EA',
   },
   button: {
-    paddingVertical: 16,
-    borderRadius: 10,
+    paddingVertical: 14,
+    borderRadius: 8,
     alignItems: 'center',
     justifyContent: 'center',
-    minHeight: 50,
+    minHeight: 48,
     flexGrow: 1,
+    marginBottom: 10,
+    
   },
-  previousButton: {
+  grayButton: {
     backgroundColor: '#8E8E93',
-    flexBasis: '30%',
-  },
-  primaryButton: {
-    backgroundColor: '#007AFF',
-    flexBasis: '65%',
-  },
-  successButton: {
-    backgroundColor: '#34C759',
-    flexBasis: '48%',
-  },
-  pdfButton: {
-    backgroundColor: '#FF9500',
-    flexBasis: '48%',
   },
   cancelButton: {
     backgroundColor: 'transparent',
     borderWidth: 1,
-    borderColor: '#FF3B30',
+    borderColor: '#8E8E93',
     flexBasis: '100%',
-    marginTop: 10,
+    marginTop: 8,
   },
   buttonText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
     color: 'white',
+    fontFamily: FONTS.regular
   },
   cancelButtonText: {
-    fontSize: 16,
+    fontSize: 15,
     fontWeight: '600',
-    color: '#FF3B30',
+    color: '#8E8E93',
   },
 });
