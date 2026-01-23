@@ -13,10 +13,8 @@
     },
     "android": {
       "adaptiveIcon": {
-        "backgroundColor": "#E6F4FE",
-        "foregroundImage": "./assets/images/android-icon-foreground.png",
-        "backgroundImage": "./assets/images/android-icon-background.png",
-        "monochromeImage": "./assets/images/android-icon-monochrome.png"
+        "foregroundImage": "./assets/icons/reset-ambiental-logo.png",
+        "backgroundColor": "#E6F4FE"
       },
       "edgeToEdgeEnabled": true,
       "predictiveBackGestureEnabled": false,
@@ -52,6 +50,12 @@
         "projectId": "c0e396e1-0790-4b77-abcd-dcfd58f33bea"
       }
     },
-    "owner": "brenocosta19s-organization"
+    "owner": "brenocosta19s-organization",
+    "runtimeVersion": {
+      "policy": "appVersion"
+    },
+    "updates": {
+      "url": "https://u.expo.dev/c0e396e1-0790-4b77-abcd-dcfd58f33bea"
+    }
   }
 }
